@@ -1,0 +1,62 @@
+{
+  "fastapi": {
+    "courses": [
+      {
+        "title": "FastAPI - The Complete Course",
+        "url": "https://www.udemy.com/course/fastapi-the-complete-course/",
+        "hours": 12,
+        "type": "course"
+      }
+    ]
+  },
+  "docker": {
+    "courses": [
+      {
+        "title": "Docker Mastery: with Kubernetes +Swarm from a Docker Captain",
+        "url": "https://www.udemy.com/course/docker-mastery/",
+        "hours": 20,
+        "type": "course"
+      }
+    ]
+  },
+  "dbt": {
+    "courses": [
+      {
+        "title": "Data Engineering with dbt",
+        "url": "https://www.datacamp.com/courses/introduction-to-dbt",
+        "hours": 8,
+        "type": "course"
+      }
+    ]
+  },
+  "airflow": {
+    "courses": [
+      {
+        "title": "Apache Airflow: The Hands-On Guide",
+        "url": "https://www.udemy.com/course/the-complete-hands-on-course-to-master-apache-airflow/",
+        "hours": 10,
+        "type": "course"
+      }
+    ]
+  },
+  "pytorch": {
+    "courses": [
+      {
+        "title": "PyTorch for Deep Learning in 2024: Zero to Mastery",
+        "url": "https://www.udemy.com/course/pytorch-for-deep-learning/",
+        "hours": 25,
+        "type": "course"
+      }
+    ]
+  },
+  "kubernetes": {
+    "courses": [
+      {
+        "title": "Kubernetes for the Absolute Beginners - Hands-on",
+        "url": "https://www.udemy.com/course/learn-kubernetes/",
+        "hours": 15,
+        "type": "course"
+      }
+    ]
+  }
+}

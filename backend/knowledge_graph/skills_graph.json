@@ -1,0 +1,517 @@
+{
+  "nodes": [
+    {
+      "id": "python",
+      "label": "Python",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "fastapi",
+      "label": "Fastapi",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "flask",
+      "label": "Flask",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "django",
+      "label": "Django",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "nodejs",
+      "label": "Nodejs",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "expressjs",
+      "label": "Expressjs",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "rest_api",
+      "label": "Rest Api",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "graphql",
+      "label": "Graphql",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "grpc",
+      "label": "Grpc",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "websockets",
+      "label": "Websockets",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "celery",
+      "label": "Celery",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "redis",
+      "label": "Redis",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "postgresql",
+      "label": "Postgresql",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "mysql",
+      "label": "Mysql",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "mongodb",
+      "label": "Mongodb",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "docker",
+      "label": "Docker",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "kubernetes",
+      "label": "Kubernetes",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "github_actions",
+      "label": "Github Actions",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "git",
+      "label": "Git",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "linux_cli",
+      "label": "Linux Cli",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "nginx",
+      "label": "Nginx",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "jwt_auth",
+      "label": "Jwt Auth",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "pytest",
+      "label": "Pytest",
+      "domain": "backend",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "sql",
+      "label": "Sql",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "dbt",
+      "label": "Dbt",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "airflow",
+      "label": "Airflow",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "prefect",
+      "label": "Prefect",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "spark",
+      "label": "Spark",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "kafka",
+      "label": "Kafka",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "pandas",
+      "label": "Pandas",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "polars",
+      "label": "Polars",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "numpy",
+      "label": "Numpy",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "pyspark",
+      "label": "Pyspark",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "snowflake",
+      "label": "Snowflake",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "bigquery",
+      "label": "Bigquery",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "duckdb",
+      "label": "Duckdb",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "great_expectations",
+      "label": "Great Expectations",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "dagster",
+      "label": "Dagster",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "data_modeling",
+      "label": "Data Modeling",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "etl_pipelines",
+      "label": "Etl Pipelines",
+      "domain": "data_engineering",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "scikit_learn",
+      "label": "Scikit Learn",
+      "domain": "ml",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "pytorch",
+      "label": "Pytorch",
+      "domain": "ml",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "tensorflow",
+      "label": "Tensorflow",
+      "domain": "ml",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "huggingface_transformers",
+      "label": "Huggingface Transformers",
+      "domain": "ml",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "mlflow",
+      "label": "Mlflow",
+      "domain": "ml",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "bentoml",
+      "label": "Bentoml",
+      "domain": "ml",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "onnx",
+      "label": "Onnx",
+      "domain": "ml",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "feature_engineering",
+      "label": "Feature Engineering",
+      "domain": "ml",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "model_evaluation",
+      "label": "Model Evaluation",
+      "domain": "ml",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "hyperparameter_tuning",
+      "label": "Hyperparameter Tuning",
+      "domain": "ml",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "nlp_basics",
+      "label": "Nlp Basics",
+      "domain": "ml",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "llm_prompting",
+      "label": "Llm Prompting",
+      "domain": "ml",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "langchain",
+      "label": "Langchain",
+      "domain": "ml",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "langgraph",
+      "label": "Langgraph",
+      "domain": "ml",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "vector_databases",
+      "label": "Vector Databases",
+      "domain": "ml",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "terraform",
+      "label": "Terraform",
+      "domain": "devops",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "aws_ec2",
+      "label": "Aws Ec2",
+      "domain": "devops",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "aws_s3",
+      "label": "Aws S3",
+      "domain": "devops",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "aws_lambda",
+      "label": "Aws Lambda",
+      "domain": "devops",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "aws_sagemaker",
+      "label": "Aws Sagemaker",
+      "domain": "devops",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "gcp_vertex",
+      "label": "Gcp Vertex",
+      "domain": "devops",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "azure_ml",
+      "label": "Azure Ml",
+      "domain": "devops",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "ci_cd",
+      "label": "Ci Cd",
+      "domain": "devops",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "prometheus",
+      "label": "Prometheus",
+      "domain": "devops",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "grafana",
+      "label": "Grafana",
+      "domain": "devops",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "helm",
+      "label": "Helm",
+      "domain": "devops",
+      "level": "intermediate",
+      "tags": []
+    },
+    {
+      "id": "ansible",
+      "label": "Ansible",
+      "domain": "devops",
+      "level": "intermediate",
+      "tags": []
+    }
+  ],
+  "edges": [
+    {
+      "source": "python",
+      "target": "fastapi",
+      "type": "PREREQUISITE",
+      "weight": 0.8,
+      "hop_cost": 1
+    },
+    {
+      "source": "python",
+      "target": "pandas",
+      "type": "PREREQUISITE",
+      "weight": 0.8,
+      "hop_cost": 1
+    },
+    {
+      "source": "pandas",
+      "target": "polars",
+      "type": "COUSIN",
+      "weight": 0.9,
+      "hop_cost": 1
+    },
+    {
+      "source": "fastapi",
+      "target": "docker",
+      "type": "BRIDGES",
+      "weight": 0.5,
+      "hop_cost": 2
+    },
+    {
+      "source": "git",
+      "target": "github_actions",
+      "type": "PREREQUISITE",
+      "weight": 0.8,
+      "hop_cost": 1
+    },
+    {
+      "source": "sql",
+      "target": "dbt",
+      "type": "PREREQUISITE",
+      "weight": 0.8,
+      "hop_cost": 1
+    }
+  ]
+}
