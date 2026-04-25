@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { useStore } from "@/lib/store"
 import { getRoadmap } from "@/lib/api"
-import { createClient } from "@/utils/supabase/client"
 import SkillHeatmap from "@/components/results/SkillHeatmap"
 import RoadmapTimeline from "@/components/results/RoadmapTimeline"
 import GraphPathViz from "@/components/results/GraphPathViz"
@@ -12,60 +11,28 @@ export default function ResultsPage() {
   const params = useParams()
   const id = typeof params.id === "string" ? params.id : null
   const router = useRouter()
-  const { hoursPerDay, setHoursPerDay, result, setResult, resetAssessment } = useStore()
+  const { hoursPerDay, setHoursPerDay, result, setResult, resetAssessment, resumeText } = useStore()
   const [mounted, setMounted] = useState(false)
   const [error, setError] = useState("")
-  const [resumeText, setResumeText] = useState("")
-  const [role, setRole] = useState("")
-  const [candidateInfo, setCandidateInfo] = useState<{name: string, email: string} | null>(null)
 
   useEffect(() => {
     setMounted(true)
     if (!id) return
-    const loadResults = async () => {
-      const supabase = createClient()
-      
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user) {
-        const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
-        if (profile) setRole(profile.role)
-      }
-
-      // 1. Try to load completed result from Supabase
-      const { data: assessment } = await supabase.from('assessments').select('status, result_data, resume_text, profiles(full_name, email)').eq('id', id).single()
-      
-      if (assessment) {
-        setResumeText(assessment.resume_text || "")
-        if (assessment.profiles) {
-          setCandidateInfo({
-            name: assessment.profiles.full_name || "",
-            email: assessment.profiles.email || ""
-          })
-        }
-        if (assessment.status === 'completed' && assessment.result_data) {
-          setResult(assessment.result_data)
-          return
-        }
-      }
-
-      // 2. If not completed or not in Supabase, try to fetch from Python backend (live computation)
-      try {
-        const res = await getRoadmap(id, hoursPerDay)
-        setResult(res)
-        
-        // 3. Save the newly computed result to Supabase
-        await supabase.from('assessments').update({
-          status: 'completed',
-          result_data: res
-        }).eq('id', id)
-      } catch (err) {
-        console.error("Failed to load roadmap:", err)
-        setError("This assessment session was interrupted or wiped from memory before completion.")
-      }
-    }
     
-    loadResults()
-  }, [id, hoursPerDay, setResult, router])
+    // Only fetch if we don't have results for this ID
+    if (!result || result.skill_scores === undefined) {
+      const loadResults = async () => {
+        try {
+          const res = await getRoadmap(id, hoursPerDay)
+          setResult(res)
+        } catch (err) {
+          console.error("Failed to load roadmap:", err)
+          setError("This assessment session was interrupted or wiped from memory before completion.")
+        }
+      }
+      loadResults()
+    }
+  }, [id, hoursPerDay, result, setResult])
 
   if (error) {
     return (
@@ -89,31 +56,6 @@ export default function ResultsPage() {
     ? Math.round((result.skill_scores.reduce((sum: number, s: any) => sum + s.final_score, 0) / result.skill_scores.length) * 100)
     : 0;
 
-  if (role === 'candidate') {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-bg font-sans text-center p-6 space-y-6">
-        <div className="bg-surface border border-border p-12 rounded-3xl shadow-xl max-w-lg w-full flex flex-col items-center">
-          <div className="w-20 h-20 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mb-6">
-            <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
-          </div>
-          <h1 className="text-3xl font-bold text-text mb-4">Assessment Submitted</h1>
-          <p className="text-muted mb-8">
-            Your technical assessment has been successfully completed and securely transmitted to the employer. They will review your results and contact you soon.
-          </p>
-          <button 
-            onClick={() => {
-              resetAssessment()
-              router.push('/candidate')
-            }}
-            className="w-full bg-accent text-white font-bold py-4 rounded-xl hover:scale-[1.02] shadow-md transition-all"
-          >
-            Return to Candidate Portal
-          </button>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="min-h-screen relative bg-bg text-text p-6 md:p-12 font-sans overflow-x-hidden">
       
@@ -124,11 +66,6 @@ export default function ResultsPage() {
             <h1 className="text-4xl md:text-5xl font-bold font-mono tracking-tighter mb-3">
               <span className="text-accent">Assessment</span> Results
             </h1>
-            {candidateInfo && (
-              <p className="text-lg font-mono text-text mb-2">
-                Candidate: <span className="font-bold">{candidateInfo.name || candidateInfo.email}</span>
-              </p>
-            )}
             <p className="text-muted font-mono flex items-center">
               <span className="w-2 h-2 rounded-full bg-accent mr-3 animate-pulse"></span>
               Profile: {result.extraction.seniority_level} {result.extraction.domain}
@@ -141,9 +78,9 @@ export default function ResultsPage() {
                 <span className="text-accent font-bold">{hoursPerDay}h/day</span>
              </label>
              <input 
-                type="range" min="1" max="8" step="0.5" 
+                type="range" min="1" max="8" step="0.5" disabled
                 value={hoursPerDay} onChange={(e) => setHoursPerDay(parseFloat(e.target.value))}
-                className="w-full h-1.5 bg-gray-300 rounded-lg appearance-none cursor-pointer accent-accent transition-all hover:h-2"
+                className="w-full h-1.5 bg-gray-300 rounded-lg appearance-none cursor-not-allowed accent-accent opacity-70"
              />
           </div>
         </header>

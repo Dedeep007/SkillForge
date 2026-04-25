@@ -31,9 +31,9 @@ def get_difficulty(question_number: int, current_score: float) -> str:
     if question_number == 1:
         return "conceptual"
     if question_number == 2:
-        return "applied" if current_score > 0.5 else "conceptual"
+        return "applied"
     if question_number >= 3:
-        return "scenario" if current_score > 0.6 else "applied"
+        return "debugging"
     return "conceptual"
 
 def generate_question(

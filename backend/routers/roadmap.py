@@ -21,7 +21,8 @@ async def get_roadmap(assessment_id: str, hours_per_day: float = 2.0):
     roadmap = generate_roadmap(
         st.get("skill_scores", []),
         st.get("graph_paths", {}),
-        hours_per_day
+        hours_per_day,
+        st["extraction"].domain
     )
     
     return AssessmentResult(
