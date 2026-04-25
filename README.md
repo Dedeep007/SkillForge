@@ -21,7 +21,7 @@ SkillForge AI is built as a full-stack monorepo featuring a powerful Python/AI b
 
 ### Frontend (User Interface)
 - **Framework:** Next.js 14 (App Router)
-- **Styling:** Tailwind CSS + Custom Industrial Dark Theme
+- **Styling:** Tailwind CSS + Enterprise Light Theme
 - **State Management:** Zustand
 - **Streaming:** Server-Sent Events (SSE) via native Web API `EventSource`
 
@@ -33,7 +33,7 @@ SkillForge AI is built as a full-stack monorepo featuring a powerful Python/AI b
 2. **Gap Analysis (`claim_vs_reality.py`):** Cross-references resume claims against job requirements to flag high-priority gaps.
 3. **Conversational Assessment (`interviewer.py` & `scorer.py`):** The agent engages the candidate in a dynamic, progressive Q&A to verify actual competency rather than just stated experience.
 4. **Targeted Challenges (`challenger.py`):** For intermediate/senior skills, the agent generates grounded "find-the-bug" style micro-challenges.
-5. **Roadmap Generation (`roadmap_generator.py`):** The Knowledge Graph engine (`graph_engine.py`) calculates the shortest learning path from what the candidate *already knows* to what they *need to know*, packaging it into a multi-tiered weekly syllabus.
+5. **Roadmap Generation (`roadmap_generator.py` & `roadmap_builder.py`):** The Knowledge Graph engine calculates the shortest learning path. A dedicated AI Roadmap Builder then synthesizes the candidate's exact performance scores and target domain to generate a custom 3-tier weekly syllabus, complete with personalized mini-projects and rationales.
 
 ---
 
