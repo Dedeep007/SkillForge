@@ -41,7 +41,7 @@ export default function CandidateDashboard() {
     setFullName(profile.full_name || "")
 
     // Fetch all jobs
-    const { data } = await supabase.from('jobs').select('*, profiles(email)').order('created_at', { ascending: false })
+    const { data } = await supabase.from('jobs').select('*, profiles(email, full_name)').order('created_at', { ascending: false })
     if (data) setJobs(data)
     setLoading(false)
   }
@@ -69,7 +69,7 @@ export default function CandidateDashboard() {
   return (
     <div className="min-h-screen bg-bg text-text p-6 md:p-12 font-sans overflow-x-hidden">
       <div className="max-w-4xl mx-auto space-y-12">
-        <header className="flex flex-col gap-6 border-b border-border/40 pb-6">
+        <header className="flex flex-col gap-6 border-b border-border pb-6">
           <div className="flex justify-between items-end">
             <div>
               <h1 className="text-4xl font-bold font-mono tracking-tighter mb-2">Candidate <span className="text-accent">Portal</span></h1>
@@ -88,16 +88,16 @@ export default function CandidateDashboard() {
           <h2 className="text-2xl font-mono text-text">Open Positions</h2>
           
           {jobs.length === 0 ? (
-            <div className="border border-dashed border-border/50 rounded-2xl p-12 text-center text-muted font-mono">
+            <div className="border border-dashed border-border rounded-2xl p-12 text-center text-muted font-mono">
               No open positions at the moment. Check back soon!
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-4">
               {jobs.map(job => (
-                <div key={job.id} className="bg-surface/40 backdrop-blur-md border border-border/40 p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-accent/50 transition-colors">
+                <div key={job.id} className="bg-surface border border-border shadow-sm p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-accent/50 transition-colors">
                   <div>
                     <h3 className="text-xl font-mono text-accent mb-2">{job.title}</h3>
-                    <p className="text-xs font-mono text-muted">Posted by: {job.profiles?.email}</p>
+                    <p className="text-xs font-mono text-muted">Posted by: {job.profiles?.full_name || job.profiles?.email}</p>
                     <p className="text-xs font-mono text-muted mt-1">{new Date(job.created_at).toLocaleDateString()}</p>
                   </div>
                   <button 
@@ -112,12 +112,12 @@ export default function CandidateDashboard() {
           )}
         </section>
         ) : (
-          <section className="bg-surface border border-border/40 p-8 rounded-3xl max-w-lg">
+          <section className="bg-surface border border-border p-8 rounded-3xl max-w-lg">
             <h2 className="text-2xl font-mono text-text mb-6">Profile Settings</h2>
             <div className="space-y-6">
               <div>
                 <label className="block text-xs uppercase tracking-wider font-mono text-muted mb-2">Account Email</label>
-                <input type="text" disabled value={profileData?.email || ""} className="w-full bg-background border border-border/50 rounded-xl p-3 text-sm opacity-50 cursor-not-allowed" />
+                <input type="text" disabled value={profileData?.email || ""} className="w-full bg-background border border-border rounded-xl p-3 text-sm opacity-50 cursor-not-allowed" />
               </div>
               <div>
                 <label className="block text-xs uppercase tracking-wider font-mono text-muted mb-2">Full Name</label>
@@ -125,7 +125,7 @@ export default function CandidateDashboard() {
                   type="text" 
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full bg-background border border-border/50 rounded-xl p-3 text-sm focus:outline-none focus:border-accent"
+                  className="w-full bg-background border border-border rounded-xl p-3 text-sm focus:outline-none focus:border-accent"
                   placeholder="John Doe"
                 />
               </div>

@@ -17,6 +17,7 @@ export default function ResultsPage() {
   const [error, setError] = useState("")
   const [resumeText, setResumeText] = useState("")
   const [role, setRole] = useState("")
+  const [candidateInfo, setCandidateInfo] = useState<{name: string, email: string} | null>(null)
 
   useEffect(() => {
     setMounted(true)
@@ -31,10 +32,16 @@ export default function ResultsPage() {
       }
 
       // 1. Try to load completed result from Supabase
-      const { data: assessment } = await supabase.from('assessments').select('status, result_data, resume_text').eq('id', id).single()
+      const { data: assessment } = await supabase.from('assessments').select('status, result_data, resume_text, profiles(full_name, email)').eq('id', id).single()
       
       if (assessment) {
         setResumeText(assessment.resume_text || "")
+        if (assessment.profiles) {
+          setCandidateInfo({
+            name: assessment.profiles.full_name || "",
+            email: assessment.profiles.email || ""
+          })
+        }
         if (assessment.status === 'completed' && assessment.result_data) {
           setResult(assessment.result_data)
           return
@@ -112,18 +119,23 @@ export default function ResultsPage() {
       
       <div className="relative z-10 max-w-6xl mx-auto space-y-16">
         {/* Header */}
-        <header className="flex flex-col md:flex-row md:items-end justify-between border-b border-border/40 pb-8 gap-6 backdrop-blur-md bg-bg/40 p-8 rounded-2xl border shadow-lg">
+        <header className="flex flex-col md:flex-row md:items-end justify-between border-b border-border pb-8 gap-6 backdrop-blur-md bg-bg/40 p-8 rounded-2xl border shadow-lg">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold font-mono tracking-tighter mb-3">
               <span className="text-accent">Assessment</span> Results
             </h1>
+            {candidateInfo && (
+              <p className="text-lg font-mono text-text mb-2">
+                Candidate: <span className="font-bold">{candidateInfo.name || candidateInfo.email}</span>
+              </p>
+            )}
             <p className="text-muted font-mono flex items-center">
               <span className="w-2 h-2 rounded-full bg-accent mr-3 animate-pulse"></span>
               Profile: {result.extraction.seniority_level} {result.extraction.domain}
             </p>
           </div>
           
-          <div className="bg-surface/60 backdrop-blur-xl border border-border/50 p-5 rounded-xl w-full md:w-72 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
+          <div className="bg-surface border border-border shadow-sm p-5 rounded-xl w-full md:w-72 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
              <label className="flex justify-between text-sm font-mono text-muted mb-3">
                 <span>Availability</span>
                 <span className="text-accent font-bold">{hoursPerDay}h/day</span>
@@ -131,13 +143,13 @@ export default function ResultsPage() {
              <input 
                 type="range" min="1" max="8" step="0.5" 
                 value={hoursPerDay} onChange={(e) => setHoursPerDay(parseFloat(e.target.value))}
-                className="w-full h-1.5 bg-background rounded-lg appearance-none cursor-pointer accent-accent transition-all hover:h-2"
+                className="w-full h-1.5 bg-gray-300 rounded-lg appearance-none cursor-pointer accent-accent transition-all hover:h-2"
              />
           </div>
         </header>
 
         {/* Score Overview */}
-        <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-500 flex flex-col items-center">
+        <section className="bg-surface border border-border shadow-sm p-8 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-500 flex flex-col items-center">
           <h2 className="text-2xl font-mono text-accent mb-8">Overall Capability Score</h2>
           <div className="relative w-48 h-48 flex items-center justify-center">
             <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
@@ -152,25 +164,25 @@ export default function ResultsPage() {
         </section>
 
         {/* Skill Map */}
-        <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-500">
+        <section className="bg-surface border border-border shadow-sm p-8 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-500">
           <h2 className="text-2xl font-mono text-accent mb-8 flex items-center">
             <span className="w-10 h-px bg-accent/50 mr-4"></span>
             Skill Map
-            <span className="ml-4 text-xs font-sans text-muted bg-surface px-3 py-1 rounded-full border border-border/50 hidden sm:inline-block">Performance Overview</span>
+            <span className="ml-4 text-xs font-sans text-muted bg-surface px-3 py-1 rounded-full border border-border hidden sm:inline-block">Performance Overview</span>
           </h2>
           <SkillHeatmap skillScores={result.skill_scores} />
         </section>
 
         {/* Learning Path */}
         {result.roadmap.filter(r => r.tier === 1).length > 0 && (
-          <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-500">
+          <section className="bg-surface border border-border shadow-sm p-8 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-500">
             <h2 className="text-2xl font-mono text-accent mb-8 flex items-center">
               <span className="w-10 h-px bg-accent/50 mr-4"></span>
               Prerequisite Pathways
             </h2>
             <div className="grid grid-cols-1 gap-6">
               {result.roadmap.filter(r => r.tier === 1).map(r => (
-                <div key={r.skill_id} className="bg-background/80 border border-border/50 rounded-xl p-6 transition-transform hover:-translate-y-1 duration-300">
+                <div key={r.skill_id} className="bg-background/80 border border-border rounded-xl p-6 transition-transform hover:-translate-y-1 duration-300">
                   <h3 className="font-mono text-text mb-4 flex items-center">
                     <div className="w-2 h-2 bg-accent rounded-sm mr-3"></div>
                     {r.label}
@@ -183,7 +195,7 @@ export default function ResultsPage() {
         )}
 
         {/* Roadmap */}
-        <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-500">
+        <section className="bg-surface border border-border shadow-sm p-8 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-500">
           <h2 className="text-2xl font-mono text-accent mb-8 flex items-center">
             <span className="w-10 h-px bg-accent/50 mr-4"></span>
             Personalized Roadmap
@@ -193,12 +205,12 @@ export default function ResultsPage() {
 
         {/* Resume View */}
         {resumeText && (
-          <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-500">
+          <section className="bg-surface border border-border shadow-sm p-8 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-500">
             <h2 className="text-2xl font-mono text-accent mb-8 flex items-center">
               <span className="w-10 h-px bg-accent/50 mr-4"></span>
               Candidate Resume
             </h2>
-            <div className="bg-background/80 border border-border/50 rounded-xl p-6 max-h-[500px] overflow-y-auto font-mono text-sm text-muted whitespace-pre-wrap leading-relaxed">
+            <div className="bg-background/80 border border-border rounded-xl p-6 max-h-[500px] overflow-y-auto font-mono text-sm text-muted whitespace-pre-wrap leading-relaxed">
               {resumeText}
             </div>
           </section>

@@ -41,7 +41,7 @@ export default function ChatInterface({ messages, onSend, isWaiting }: Props) {
     
     return (
       <div className="space-y-4">
-        <div className="prose prose-invert max-w-none text-sm font-sans">
+        <div className="prose prose-slate max-w-none text-sm font-sans">
           <ReactMarkdown>{mainText.join('\n')}</ReactMarkdown>
         </div>
         {options.length > 0 && (
@@ -75,13 +75,13 @@ export default function ChatInterface({ messages, onSend, isWaiting }: Props) {
         {messages.map((m) => (
           <div key={m.id} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
             {m.role === "agent" && (
-              <div className="w-8 h-8 rounded-full bg-accent text-background flex items-center justify-center font-bold mr-3 shrink-0">SF</div>
+              <div className="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center font-bold mr-3 shrink-0">SF</div>
             )}
             
             {m.role === "challenge" ? (
-              <div className="w-full bg-background border border-red-500/30 rounded-lg p-4">
-                <div className="text-red-400 font-mono text-sm mb-2 font-bold uppercase">Challenge</div>
-                <div className="prose prose-invert max-w-none text-sm font-sans">
+              <div className="w-full bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="text-blue-600 font-mono text-sm mb-2 font-bold uppercase">Challenge</div>
+                <div className="prose prose-slate max-w-none text-sm font-sans">
                   <ReactMarkdown>{m.content}</ReactMarkdown>
                 </div>
                 <div className="mt-4 text-xs text-muted">Submit your answer below</div>
@@ -89,11 +89,11 @@ export default function ChatInterface({ messages, onSend, isWaiting }: Props) {
             ) : m.role === "system" ? (
               <div className="w-full text-center text-muted text-xs italic">{m.content}</div>
             ) : m.role === "user" ? (
-              <div className="max-w-[80%] p-4 rounded-xl text-sm bg-accent/10 text-accent ml-12">
+              <div className="max-w-[80%] p-4 rounded-xl text-sm bg-accent/10 text-accent font-medium ml-12">
                 <ReactMarkdown>{m.content}</ReactMarkdown>
               </div>
             ) : (
-              <div className="max-w-[80%] p-4 rounded-xl text-sm bg-background text-text border border-border/50 shadow-sm">
+              <div className="max-w-[80%] p-4 rounded-xl text-sm bg-white text-gray-800 border border-border shadow-sm">
                 {renderAgentMessage(m.content)}
               </div>
             )}

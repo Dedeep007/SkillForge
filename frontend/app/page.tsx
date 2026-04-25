@@ -14,7 +14,7 @@ export default function LandingPage() {
         </p>
         
         <div className="flex flex-col md:flex-row gap-6 w-full max-w-2xl">
-          <div className="flex-1 bg-surface/60 backdrop-blur-xl border border-border/50 p-8 rounded-3xl flex flex-col items-center">
+          <div className="flex-1 bg-surface border border-border shadow-sm p-8 rounded-3xl flex flex-col items-center">
             <h2 className="text-2xl font-mono text-accent mb-4">For Employers</h2>
             <p className="text-muted text-sm mb-8 text-center">Post jobs, set requirements, and let AI conduct the first-round technical interviews for you.</p>
             <button
@@ -25,7 +25,7 @@ export default function LandingPage() {
             </button>
           </div>
 
-          <div className="flex-1 bg-surface/60 backdrop-blur-xl border border-border/50 p-8 rounded-3xl flex flex-col items-center">
+          <div className="flex-1 bg-surface border border-border shadow-sm p-8 rounded-3xl flex flex-col items-center">
             <h2 className="text-2xl font-mono text-accent mb-4">For Candidates</h2>
             <p className="text-muted text-sm mb-8 text-center">Apply to open roles, take interactive AI-driven technical assessments, and prove your skills.</p>
             <button

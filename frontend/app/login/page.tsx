@@ -73,7 +73,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen relative bg-bg text-text flex items-center justify-center p-6 overflow-hidden">
-      <div className="relative z-10 max-w-md w-full bg-surface/90 backdrop-blur-xl border border-border p-8 rounded-3xl shadow-xl">
+      <div className="relative z-10 max-w-md w-full bg-surface border border-border shadow-md p-8 rounded-3xl shadow-xl">
         <h1 className="text-4xl font-bold font-mono text-center tracking-tighter mb-2">
           SkillForge<span className="text-accent">.ai</span>
         </h1>
@@ -89,7 +89,7 @@ export default function LoginPage() {
               required
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className="w-full bg-background border border-border/50 rounded-xl p-3 text-sm focus:outline-none focus:border-accent transition-colors"
+              className="w-full bg-background border border-border rounded-xl p-3 text-sm focus:outline-none focus:border-accent transition-colors"
               placeholder="you@example.com"
             />
           </div>
@@ -100,7 +100,7 @@ export default function LoginPage() {
               required
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className="w-full bg-background border border-border/50 rounded-xl p-3 text-sm focus:outline-none focus:border-accent transition-colors"
+              className="w-full bg-background border border-border rounded-xl p-3 text-sm focus:outline-none focus:border-accent transition-colors"
               placeholder="••••••••"
             />
           </div>
@@ -112,14 +112,14 @@ export default function LoginPage() {
                 <button 
                   type="button"
                   onClick={() => setRole("candidate")}
-                  className={`flex-1 p-3 rounded-xl border font-mono transition-all duration-300 ${role === "candidate" ? "border-accent bg-accent/10 text-accent shadow-sm" : "border-border/50 bg-background text-muted hover:border-border"}`}
+                  className={`flex-1 p-3 rounded-xl border font-mono transition-all duration-300 ${role === "candidate" ? "border-accent bg-accent/10 text-accent shadow-sm" : "border-border bg-background text-muted hover:border-border"}`}
                 >
                   Candidate
                 </button>
                 <button 
                   type="button"
                   onClick={() => setRole("employer")}
-                  className={`flex-1 p-3 rounded-xl border font-mono transition-all duration-300 ${role === "employer" ? "border-accent bg-accent/10 text-accent shadow-sm" : "border-border/50 bg-background text-muted hover:border-border"}`}
+                  className={`flex-1 p-3 rounded-xl border font-mono transition-all duration-300 ${role === "employer" ? "border-accent bg-accent/10 text-accent shadow-sm" : "border-border bg-background text-muted hover:border-border"}`}
                 >
                   Employer
                 </button>

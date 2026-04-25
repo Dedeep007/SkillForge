@@ -31,7 +31,7 @@ export default function EmployerJobPage() {
 
     // Fetch assessments for this job
     const { data: assessmentData } = await supabase.from('assessments')
-      .select('id, status, created_at, result_data, profiles(email)')
+      .select('id, status, created_at, result_data, profiles(email, full_name)')
       .eq('job_id', id)
       
     if (assessmentData) {
@@ -59,12 +59,12 @@ export default function EmployerJobPage() {
           ← Back to Dashboard
         </button>
         
-        <header className="border-b border-border/40 pb-6 flex justify-between items-end">
+        <header className="border-b border-border pb-6 flex justify-between items-end">
           <div>
             <h1 className="text-3xl font-bold font-mono tracking-tighter mb-2 text-accent">{job.title}</h1>
             <p className="text-muted font-mono text-sm">Posted on {new Date(job.created_at).toLocaleDateString()}</p>
           </div>
-          <div className="bg-surface/50 border border-border/50 px-4 py-2 rounded-lg">
+          <div className="bg-surface/50 border border-border px-4 py-2 rounded-lg">
             <span className="font-mono text-xl text-text font-bold">{assessments.length}</span>
             <span className="text-muted text-xs uppercase ml-2">Candidates</span>
           </div>
@@ -74,15 +74,18 @@ export default function EmployerJobPage() {
           <h2 className="text-2xl font-mono text-text">Candidate Assessments</h2>
           
           {assessments.length === 0 ? (
-            <div className="border border-dashed border-border/50 rounded-2xl p-12 text-center text-muted font-mono bg-surface/20">
+            <div className="border border-dashed border-border rounded-2xl p-12 text-center text-muted font-mono bg-surface/50">
               No candidates have applied to this job yet.
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-4">
               {assessments.map((assessment) => (
-                <div key={assessment.id} className="bg-surface/40 backdrop-blur-md border border-border/40 p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-accent/50 transition-colors">
+                <div key={assessment.id} className="bg-surface border border-border shadow-sm p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-accent/50 transition-colors">
                   <div>
-                    <h3 className="text-lg font-mono text-text mb-1">{assessment.profiles?.email}</h3>
+                    <h3 className="text-lg font-mono text-text mb-1">
+                      {assessment.profiles?.full_name ? assessment.profiles.full_name : assessment.profiles?.email}
+                      {assessment.profiles?.full_name && <span className="text-sm text-muted ml-2">({assessment.profiles?.email})</span>}
+                    </h3>
                     <div className="flex items-center gap-3">
                       <span className={`text-xs font-mono px-2 py-1 rounded-md border ${
                         assessment.status === 'completed' 
