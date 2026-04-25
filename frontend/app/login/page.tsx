@@ -73,10 +73,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen relative bg-bg text-text flex items-center justify-center p-6 overflow-hidden">
-      <div className="fixed inset-0 pointer-events-none bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] z-0"></div>
-      <div className="fixed inset-0 pointer-events-none z-0" style={{ background: "radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.05) 0%, transparent 70%)" }}></div>
-      
-      <div className="relative z-10 max-w-md w-full bg-surface/60 backdrop-blur-xl border border-border/50 p-8 rounded-3xl shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
+      <div className="relative z-10 max-w-md w-full bg-surface/90 backdrop-blur-xl border border-border p-8 rounded-3xl shadow-xl">
         <h1 className="text-4xl font-bold font-mono text-center tracking-tighter mb-2">
           SkillForge<span className="text-accent">.ai</span>
         </h1>
@@ -115,14 +112,14 @@ export default function LoginPage() {
                 <button 
                   type="button"
                   onClick={() => setRole("candidate")}
-                  className={`flex-1 p-3 rounded-xl border font-mono transition-all duration-300 ${role === "candidate" ? "border-accent bg-accent/10 text-accent shadow-[0_0_15px_rgba(0,240,255,0.15)]" : "border-border/50 bg-background text-muted hover:border-border"}`}
+                  className={`flex-1 p-3 rounded-xl border font-mono transition-all duration-300 ${role === "candidate" ? "border-accent bg-accent/10 text-accent shadow-sm" : "border-border/50 bg-background text-muted hover:border-border"}`}
                 >
                   Candidate
                 </button>
                 <button 
                   type="button"
                   onClick={() => setRole("employer")}
-                  className={`flex-1 p-3 rounded-xl border font-mono transition-all duration-300 ${role === "employer" ? "border-accent bg-accent/10 text-accent shadow-[0_0_15px_rgba(0,240,255,0.15)]" : "border-border/50 bg-background text-muted hover:border-border"}`}
+                  className={`flex-1 p-3 rounded-xl border font-mono transition-all duration-300 ${role === "employer" ? "border-accent bg-accent/10 text-accent shadow-sm" : "border-border/50 bg-background text-muted hover:border-border"}`}
                 >
                   Employer
                 </button>
@@ -133,7 +130,7 @@ export default function LoginPage() {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-accent text-background font-bold font-mono py-4 rounded-xl hover:scale-[1.02] shadow-[0_0_20px_rgba(0,240,255,0.2)] disabled:opacity-50 disabled:hover:scale-100 transition-all mt-4"
+            className="w-full bg-accent text-white font-bold font-mono py-4 rounded-xl hover:scale-[1.02] shadow-md disabled:opacity-50 disabled:hover:scale-100 transition-all mt-4"
           >
             {loading ? "Authenticating..." : (isLogin ? "Secure Login →" : "Create Account →")}
           </button>

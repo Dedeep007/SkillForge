@@ -86,7 +86,18 @@ export default function CandidateJobPage() {
           <p className="text-muted font-mono text-sm">Posted by: {job.profiles?.email}</p>
         </header>
 
-        <div className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl space-y-8">
+        {/* Job Description View */}
+        <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl space-y-4 shadow-xl hover:shadow-[0_0_30px_rgba(0,240,255,0.05)] transition-shadow duration-500">
+          <h2 className="text-xl font-mono text-accent flex items-center">
+             <span className="w-8 h-px bg-accent/50 mr-4"></span>
+             Job Description
+          </h2>
+          <div className="bg-background/80 border border-border/50 rounded-xl p-6 max-h-[300px] overflow-y-auto font-mono text-sm text-muted whitespace-pre-wrap leading-relaxed">
+            {job.jd_text}
+          </div>
+        </section>
+
+        <div className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl space-y-8 shadow-xl">
           <div>
             <h2 className="text-xl font-mono text-text mb-4 flex items-center">
                <span className="w-8 h-px bg-accent/50 mr-4"></span>
@@ -109,7 +120,7 @@ export default function CandidateJobPage() {
             <input 
               type="range" min="1" max="8" step="0.5" 
               value={hoursPerDay} onChange={(e) => setHoursPerDay(parseFloat(e.target.value))}
-              className="w-full h-1.5 bg-background rounded-lg appearance-none cursor-pointer accent-accent transition-all hover:h-2"
+              className="w-full h-1.5 bg-border/80 rounded-lg appearance-none cursor-pointer accent-accent transition-all hover:h-2"
             />
           </div>
 
@@ -118,7 +129,7 @@ export default function CandidateJobPage() {
           <button
             onClick={handleBegin}
             disabled={!resumeText || starting}
-            className="bg-accent text-background px-8 py-4 rounded-xl font-mono font-bold text-lg hover:scale-[1.02] shadow-[0_0_20px_rgba(232,255,107,0.2)] disabled:opacity-50 disabled:hover:scale-100 transition-all"
+            className="bg-accent text-background px-8 py-4 rounded-xl font-mono font-bold text-lg hover:scale-[1.02] shadow-[0_0_20px_rgba(0,240,255,0.2)] disabled:opacity-50 disabled:hover:scale-100 transition-all"
           >
             {starting ? "Initializing Engine..." : "Begin AI Interview →"}
           </button>

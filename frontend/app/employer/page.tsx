@@ -24,8 +24,15 @@ export default function EmployerDashboard() {
       return
     }
 
-    const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
-    if (profile?.role !== 'employer') {
+    const { data: profile, error } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+    
+    if (error || !profile) {
+      await supabase.auth.signOut()
+      router.push('/login')
+      return
+    }
+
+    if (profile.role !== 'employer') {
       router.push('/candidate')
       return
     }

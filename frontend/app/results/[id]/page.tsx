@@ -16,14 +16,20 @@ export default function ResultsPage() {
   const [mounted, setMounted] = useState(false)
   const [error, setError] = useState("")
   const [resumeText, setResumeText] = useState("")
+  const [role, setRole] = useState("")
 
   useEffect(() => {
     setMounted(true)
     if (!id) return
-    
     const loadResults = async () => {
       const supabase = createClient()
       
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+        if (profile) setRole(profile.role)
+      }
+
       // 1. Try to load completed result from Supabase
       const { data: assessment } = await supabase.from('assessments').select('status, result_data, resume_text').eq('id', id).single()
       
@@ -69,17 +75,40 @@ export default function ResultsPage() {
       <div className="min-h-screen flex items-center justify-center bg-bg font-mono text-accent animate-pulse">
         Compiling Results...
       </div>
+    )
   }
 
   const overallScore = result?.skill_scores?.length > 0 
     ? Math.round((result.skill_scores.reduce((sum: number, s: any) => sum + s.final_score, 0) / result.skill_scores.length) * 100)
     : 0;
 
+  if (role === 'candidate') {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-bg font-sans text-center p-6 space-y-6">
+        <div className="bg-surface border border-border p-12 rounded-3xl shadow-xl max-w-lg w-full flex flex-col items-center">
+          <div className="w-20 h-20 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mb-6">
+            <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+          </div>
+          <h1 className="text-3xl font-bold text-text mb-4">Assessment Submitted</h1>
+          <p className="text-muted mb-8">
+            Your technical assessment has been successfully completed and securely transmitted to the employer. They will review your results and contact you soon.
+          </p>
+          <button 
+            onClick={() => {
+              resetAssessment()
+              router.push('/candidate')
+            }}
+            className="w-full bg-accent text-white font-bold py-4 rounded-xl hover:scale-[1.02] shadow-md transition-all"
+          >
+            Return to Candidate Portal
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen relative bg-bg text-text p-6 md:p-12 font-sans overflow-x-hidden">
-      {/* Background Gradients */}
-      <div className="fixed inset-0 pointer-events-none bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] z-0"></div>
-      <div className="fixed inset-0 pointer-events-none z-0" style={{ background: "radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.05) 0%, transparent 70%)" }}></div>
       
       <div className="relative z-10 max-w-6xl mx-auto space-y-16">
         {/* Header */}
@@ -108,7 +137,7 @@ export default function ResultsPage() {
         </header>
 
         {/* Score Overview */}
-        <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl shadow-xl hover:shadow-[0_0_30px_rgba(0,240,255,0.05)] transition-shadow duration-500 flex flex-col items-center">
+        <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-500 flex flex-col items-center">
           <h2 className="text-2xl font-mono text-accent mb-8">Overall Capability Score</h2>
           <div className="relative w-48 h-48 flex items-center justify-center">
             <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
@@ -123,7 +152,7 @@ export default function ResultsPage() {
         </section>
 
         {/* Skill Map */}
-        <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl shadow-xl hover:shadow-[0_0_30px_rgba(0,240,255,0.05)] transition-shadow duration-500">
+        <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-500">
           <h2 className="text-2xl font-mono text-accent mb-8 flex items-center">
             <span className="w-10 h-px bg-accent/50 mr-4"></span>
             Skill Map
@@ -134,7 +163,7 @@ export default function ResultsPage() {
 
         {/* Learning Path */}
         {result.roadmap.filter(r => r.tier === 1).length > 0 && (
-          <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl shadow-xl hover:shadow-[0_0_30px_rgba(0,240,255,0.05)] transition-shadow duration-500">
+          <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-500">
             <h2 className="text-2xl font-mono text-accent mb-8 flex items-center">
               <span className="w-10 h-px bg-accent/50 mr-4"></span>
               Prerequisite Pathways
@@ -154,7 +183,7 @@ export default function ResultsPage() {
         )}
 
         {/* Roadmap */}
-        <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl shadow-xl hover:shadow-[0_0_30px_rgba(0,240,255,0.05)] transition-shadow duration-500">
+        <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-500">
           <h2 className="text-2xl font-mono text-accent mb-8 flex items-center">
             <span className="w-10 h-px bg-accent/50 mr-4"></span>
             Personalized Roadmap
@@ -164,7 +193,7 @@ export default function ResultsPage() {
 
         {/* Resume View */}
         {resumeText && (
-          <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl shadow-xl hover:shadow-[0_0_30px_rgba(0,240,255,0.05)] transition-shadow duration-500">
+          <section className="bg-surface/40 backdrop-blur-md border border-border/40 p-8 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-500">
             <h2 className="text-2xl font-mono text-accent mb-8 flex items-center">
               <span className="w-10 h-px bg-accent/50 mr-4"></span>
               Candidate Resume
@@ -181,7 +210,7 @@ export default function ResultsPage() {
               resetAssessment()
               router.push('/')
             }}
-            className="group relative inline-flex items-center justify-center px-8 py-4 font-mono font-bold text-background bg-accent rounded-xl overflow-hidden transition-all hover:scale-105 shadow-[0_0_20px_rgba(0,240,255,0.2)] hover:shadow-[0_0_40px_rgba(0,240,255,0.4)]"
+            className="group relative inline-flex items-center justify-center px-8 py-4 font-mono font-bold text-background bg-accent rounded-xl overflow-hidden transition-all hover:scale-105 shadow-sm hover:shadow-md"
           >
             <span className="relative z-10 flex items-center">
               Start New Assessment 

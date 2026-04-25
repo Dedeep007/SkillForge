@@ -5,8 +5,7 @@ export default function LandingPage() {
   const router = useRouter()
 
   return (
-    <div className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center p-6 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]">
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at center, transparent 0%, var(--bg) 100%)" }}></div>
+    <main className="min-h-screen relative bg-bg text-text flex items-center justify-center p-6 overflow-hidden">
       
       <div className="relative z-10 w-full max-w-4xl flex flex-col items-center text-center">
         <h1 className="text-5xl md:text-7xl font-bold font-mono text-text mb-4 tracking-tighter">SkillForge<span className="text-accent">.ai</span></h1>
@@ -31,13 +30,13 @@ export default function LandingPage() {
             <p className="text-muted text-sm mb-8 text-center">Apply to open roles, take interactive AI-driven technical assessments, and prove your skills.</p>
             <button
               onClick={() => router.push('/login')}
-              className="w-full bg-accent text-background px-6 py-3 rounded-xl font-mono font-bold hover:scale-[1.02] shadow-[0_0_20px_rgba(0,240,255,0.2)] transition-all"
+              className="w-full bg-accent text-white px-6 py-3 rounded-xl font-mono font-bold hover:scale-[1.02] shadow-md transition-all"
             >
               Candidate Portal →
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   )
 }

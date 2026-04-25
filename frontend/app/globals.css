@@ -3,20 +3,24 @@
 @tailwind utilities;
 
 :root {
-  --bg: #030014;
-  --surface: rgba(13, 10, 31, 0.7);
-  --border: #221c46;
-  --accent: #00f0ff;
-  --text: #ffffff;
-  --muted: #8e8b9f;
+  --bg: #05050a; /* Very deep dark space */
+  --surface: rgba(20, 20, 30, 0.4); /* Frosted glass */
+  --border: rgba(255, 255, 255, 0.08); /* Soft translucent borders */
+  --accent: #a78bfa; /* Beautiful soft glowing indigo/purple */
+  --text: #f8fafc;
+  --muted: #8c9baf;
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
-  background-image: 
-    radial-gradient(circle at 15% 0%, rgba(112, 0, 255, 0.15) 0%, transparent 40%),
-    radial-gradient(circle at 85% 100%, rgba(0, 240, 255, 0.15) 0%, transparent 40%);
-  background-attachment: fixed;
   min-height: 100vh;
+}
+
+/* Ambient Animations */
+@keyframes ambient-drift {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(3%, 5%) scale(1.05) rotate(2deg); }
+  66% { transform: translate(-2%, 4%) scale(0.95) rotate(-1deg); }
+  100% { transform: translate(0, 0) scale(1) rotate(0deg); }
 }
