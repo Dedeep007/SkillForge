@@ -97,3 +97,6 @@ skillforge-ai/
     ├── hooks/                # Custom React hooks (e.g. SSE streaming)
     └── lib/                  # API clients, Zustand store, and TS Types
 ```
+## Deployed Website
+
+https://dpv007-skillforge.hf.space
