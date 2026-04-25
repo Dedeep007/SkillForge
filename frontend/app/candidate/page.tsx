@@ -8,6 +8,10 @@ export default function CandidateDashboard() {
   const supabase = createClient()
   const [jobs, setJobs] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState<'opportunities' | 'profile'>('opportunities')
+  const [profileData, setProfileData] = useState<any>(null)
+  const [fullName, setFullName] = useState("")
+  const [saving, setSaving] = useState(false)
 
   useEffect(() => {
     fetchJobs()
@@ -20,7 +24,7 @@ export default function CandidateDashboard() {
       return
     }
 
-    const { data: profile, error } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+    const { data: profile, error } = await supabase.from('profiles').select('*').eq('id', user.id).single()
     
     if (error || !profile) {
       await supabase.auth.signOut()
@@ -33,10 +37,26 @@ export default function CandidateDashboard() {
       return
     }
 
+    setProfileData(profile)
+    setFullName(profile.full_name || "")
+
     // Fetch all jobs
     const { data } = await supabase.from('jobs').select('*, profiles(email)').order('created_at', { ascending: false })
     if (data) setJobs(data)
     setLoading(false)
+  }
+
+  const saveProfile = async () => {
+    if (!profileData) return
+    setSaving(true)
+    const { error } = await supabase.from('profiles').update({ full_name: fullName }).eq('id', profileData.id)
+    if (error) {
+      alert("Error saving profile. Make sure to run the SQL command to add the full_name column!")
+    } else {
+      setProfileData({ ...profileData, full_name: fullName })
+      alert("Profile updated successfully!")
+    }
+    setSaving(false)
   }
 
   const handleLogout = async () => {
@@ -49,15 +69,22 @@ export default function CandidateDashboard() {
   return (
     <div className="min-h-screen bg-bg text-text p-6 md:p-12 font-sans overflow-x-hidden">
       <div className="max-w-4xl mx-auto space-y-12">
-        <header className="flex justify-between items-end border-b border-border/40 pb-6">
-          <div>
-            <h1 className="text-4xl font-bold font-mono tracking-tighter mb-2">Candidate <span className="text-accent">Portal</span></h1>
-            <p className="text-muted font-mono">Discover roles and prove your skills</p>
+        <header className="flex flex-col gap-6 border-b border-border/40 pb-6">
+          <div className="flex justify-between items-end">
+            <div>
+              <h1 className="text-4xl font-bold font-mono tracking-tighter mb-2">Candidate <span className="text-accent">Portal</span></h1>
+              <p className="text-muted font-mono">Discover roles and prove your skills</p>
+            </div>
+            <button onClick={handleLogout} className="text-sm font-mono text-muted hover:text-red-400 transition-colors">Log Out</button>
           </div>
-          <button onClick={handleLogout} className="text-sm font-mono text-muted hover:text-red-400 transition-colors">Log Out</button>
+          <div className="flex gap-4">
+            <button onClick={() => setActiveTab('opportunities')} className={`font-mono pb-2 border-b-2 transition-colors ${activeTab === 'opportunities' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-text'}`}>Opportunities</button>
+            <button onClick={() => setActiveTab('profile')} className={`font-mono pb-2 border-b-2 transition-colors ${activeTab === 'profile' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-text'}`}>My Profile</button>
+          </div>
         </header>
 
-        <section className="space-y-6">
+        {activeTab === 'opportunities' ? (
+          <section className="space-y-6">
           <h2 className="text-2xl font-mono text-text">Open Positions</h2>
           
           {jobs.length === 0 ? (
@@ -84,6 +111,34 @@ export default function CandidateDashboard() {
             </div>
           )}
         </section>
+        ) : (
+          <section className="bg-surface border border-border/40 p-8 rounded-3xl max-w-lg">
+            <h2 className="text-2xl font-mono text-text mb-6">Profile Settings</h2>
+            <div className="space-y-6">
+              <div>
+                <label className="block text-xs uppercase tracking-wider font-mono text-muted mb-2">Account Email</label>
+                <input type="text" disabled value={profileData?.email || ""} className="w-full bg-background border border-border/50 rounded-xl p-3 text-sm opacity-50 cursor-not-allowed" />
+              </div>
+              <div>
+                <label className="block text-xs uppercase tracking-wider font-mono text-muted mb-2">Full Name</label>
+                <input 
+                  type="text" 
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  className="w-full bg-background border border-border/50 rounded-xl p-3 text-sm focus:outline-none focus:border-accent"
+                  placeholder="John Doe"
+                />
+              </div>
+              <button 
+                onClick={saveProfile} 
+                disabled={saving}
+                className="w-full bg-accent text-white px-6 py-3 rounded-xl font-mono font-bold hover:scale-[1.02] shadow-md transition-all disabled:opacity-50"
+              >
+                {saving ? "Saving..." : "Save Profile"}
+              </button>
+            </div>
+          </section>
+        )}
       </div>
     </div>
   )
